@@ -19,6 +19,7 @@
         </activity>
 
         <activity android:name=".TwitterPage"/>
+        <activity android:name="com.twitter.sdk.android.core.identity.OAuthActivity" />
     </application>
 
 </manifest>
