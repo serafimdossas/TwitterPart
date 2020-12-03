@@ -9,6 +9,10 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.tweetcomposer.ComposerActivity;
+
 public class TwitterPage extends Activity {
 
     Button postButton;
@@ -23,13 +27,20 @@ public class TwitterPage extends Activity {
         TextView usernameText = findViewById(R.id.usernameText);
         usernameText.setText(username);
 
-
         postButton = findViewById(R.id.postButton);
         postButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-                Intent i = new Intent(TwitterPage.this,PostActivity.class);
-                startActivity(i);
+                final TwitterSession session = TwitterCore.getInstance().getSessionManager()
+                        .getActiveSession();
+                final Intent intent = new ComposerActivity.Builder(TwitterPage.this)
+                        .session(session)
+                        .text("")
+                        .hashtags("#twitter")
+                        .createIntent();
+                startActivity(intent);
+                //Intent i = new Intent(TwitterPage.this,PostActivity.class);
+                //startActivity(i);
             }
         });
 
