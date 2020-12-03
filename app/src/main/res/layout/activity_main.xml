@@ -5,7 +5,8 @@
     android:id="@+id/twitterLogButton"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/tw__light_gray">
 
     <com.twitter.sdk.android.core.identity.TwitterLoginButton
         android:id="@+id/login_button"
