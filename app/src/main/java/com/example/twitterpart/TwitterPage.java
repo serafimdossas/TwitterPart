@@ -3,30 +3,18 @@ package com.example.twitterpart;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.VoicemailContract;
-import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.twitter.sdk.android.core.TwitterCore;
-import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.tweetcomposer.ComposerActivity;
-import com.twitter.sdk.android.tweetui.SearchTimeline;
 import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
-import com.twitter.sdk.android.tweetui.TweetTimelineRecyclerViewAdapter;
 import com.twitter.sdk.android.tweetui.UserTimeline;
-
-import java.util.List;
 
 public class TwitterPage extends Activity {
 
@@ -73,7 +61,7 @@ public class TwitterPage extends Activity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-                Intent i = new Intent(TwitterPage.this,SearchHashtagActivity.class);
+                Intent i = new Intent(TwitterPage.this, HashtagActivity.class);
                 startActivity(i);
 
             }

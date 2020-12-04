@@ -8,12 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class SearchHashtagActivity extends AppCompatActivity {
+public class HashtagActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_hashtag);
+        setContentView(R.layout.activity_hashtag);
 
         final EditText hashtagTextSearch;
         hashtagTextSearch = findViewById(R.id.hashtagTextSearch);
@@ -23,7 +23,7 @@ public class SearchHashtagActivity extends AppCompatActivity {
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent i = new Intent(SearchHashtagActivity.this,HashtagsActivity.class);
+                Intent i = new Intent(HashtagActivity.this, SearchedHashtagsActivity.class);
                 i.putExtra("EXTRA_HASHTAG", hashtagTextSearch.getText().toString());
                 startActivity(i);
             }
@@ -34,7 +34,7 @@ public class SearchHashtagActivity extends AppCompatActivity {
         trendsButton = findViewById(R.id.trendsButton);
         trendsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent i = new Intent(SearchHashtagActivity.this,TrendingHashtagsActivity.class);
+                Intent i = new Intent(HashtagActivity.this,TrendingHashtagsActivity.class);
                 startActivity(i);
             }
         });

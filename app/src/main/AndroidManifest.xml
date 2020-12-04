@@ -12,8 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".TrendingHashtagsActivity"></activity>
-        <activity android:name=".SearchHashtagActivity" />
-        <activity android:name=".HashtagsActivity" />
+        <activity android:name=".HashtagActivity" />
+        <activity android:name=".SearchedHashtagsActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
