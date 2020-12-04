@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HashtagsActivity"></activity>
+        <activity android:name=".TrendingHashtagsActivity"></activity>
+        <activity android:name=".SearchHashtagActivity" />
+        <activity android:name=".HashtagsActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +23,6 @@
         </activity>
         <activity android:name=".TwitterPage" />
         <activity android:name="com.twitter.sdk.android.core.identity.OAuthActivity" />
-
     </application>
 
 </manifest>

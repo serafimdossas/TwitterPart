@@ -45,6 +45,7 @@ public class HashtagsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hashtags);
 
+        String hashtag = getIntent().getStringExtra("EXTRA_HASHTAG");
         final TextView textPosts;
         textPosts=findViewById(R.id.textPosts);
 
@@ -53,7 +54,7 @@ public class HashtagsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         final SearchTimeline searchTimeline = new SearchTimeline.Builder()
-                .query("#paok")
+                .query(hashtag)
                 .maxItemsPerRequest(50)
                 .build();
 

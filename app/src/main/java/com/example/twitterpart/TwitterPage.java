@@ -73,7 +73,7 @@ public class TwitterPage extends Activity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-                Intent i = new Intent(TwitterPage.this,HashtagsActivity.class);
+                Intent i = new Intent(TwitterPage.this,SearchHashtagActivity.class);
                 startActivity(i);
 
             }
