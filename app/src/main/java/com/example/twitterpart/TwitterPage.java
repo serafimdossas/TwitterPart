@@ -3,15 +3,30 @@ package com.example.twitterpart;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.VoicemailContract;
+import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.tweetcomposer.ComposerActivity;
+import com.twitter.sdk.android.tweetui.SearchTimeline;
+import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
+import com.twitter.sdk.android.tweetui.TweetTimelineRecyclerViewAdapter;
+import com.twitter.sdk.android.tweetui.UserTimeline;
+
+import java.util.List;
 
 public class TwitterPage extends Activity {
 
@@ -24,8 +39,20 @@ public class TwitterPage extends Activity {
         setContentView(R.layout.twitterpage);
         String username = getIntent().getStringExtra("username");
 
+
         TextView usernameText = findViewById(R.id.usernameText);
         usernameText.setText(username);
+
+        ListView tweetList;
+        tweetList = findViewById(R.id.tweetList);
+
+        final UserTimeline userTimeline = new UserTimeline.Builder()
+                .screenName(username)
+                .build();
+        final TweetTimelineListAdapter adapter = new TweetTimelineListAdapter.Builder(this)
+                .setTimeline(userTimeline)
+                .build();
+        tweetList.setAdapter(adapter);
 
         postButton = findViewById(R.id.postButton);
         postButton.setOnClickListener(new View.OnClickListener() {
@@ -36,11 +63,9 @@ public class TwitterPage extends Activity {
                 final Intent intent = new ComposerActivity.Builder(TwitterPage.this)
                         .session(session)
                         .text("")
-                        .hashtags("#twitter")
+                        .hashtags("#AndroidStudio")
                         .createIntent();
                 startActivity(intent);
-                //Intent i = new Intent(TwitterPage.this,PostActivity.class);
-                //startActivity(i);
             }
         });
 
@@ -50,6 +75,7 @@ public class TwitterPage extends Activity {
                 // Code here executes on main thread after user presses button
                 Intent i = new Intent(TwitterPage.this,HashtagsActivity.class);
                 startActivity(i);
+
             }
         });
     }
