@@ -4,10 +4,13 @@ public class Trend {
 
     private String name;
     private String url;
+    private String query;
 
-    public Trend(String name, String url) {
+
+    public Trend(String name, String url, String query) {
         this.name = name;
         this.url = url;
+        this.query = query;
     }
 
     public String getName() {
@@ -24,5 +27,13 @@ public class Trend {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getQuery() {
+        return query;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
     }
 }

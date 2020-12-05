@@ -9,10 +9,15 @@ import android.os.Bundle;
 
 import com.twitter.sdk.android.core.Logger;
 import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.models.User;
 import com.twitter.sdk.android.tweetui.SearchTimeline;
 import com.twitter.sdk.android.tweetui.TweetTimelineRecyclerViewAdapter;
 
 import java.util.Collections;
+
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public class TrendingHashtagsActivity extends AppCompatActivity {
 
@@ -37,6 +42,7 @@ public class TrendingHashtagsActivity extends AppCompatActivity {
                         .build();
 
         recyclerView.setAdapter(adapter);
+
 
     }
 }
