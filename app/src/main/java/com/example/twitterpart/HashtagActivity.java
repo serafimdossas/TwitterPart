@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import static com.loopj.android.http.AsyncHttpClient.log;
 
 public class HashtagActivity extends AppCompatActivity {
 
@@ -34,6 +37,7 @@ public class HashtagActivity extends AppCompatActivity {
         trendsButton = findViewById(R.id.trendsButton);
         trendsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                log.e("TwitterUtils", "line start");
                 Intent i = new Intent(HashtagActivity.this,TrendingHashtagsActivity.class);
                 startActivity(i);
             }

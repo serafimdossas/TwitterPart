@@ -1,48 +1,146 @@
 package com.example.twitterpart;
 
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.media.VolumeShaper;
-import android.os.Bundle;
-
-import com.twitter.sdk.android.core.Logger;
-import com.twitter.sdk.android.core.Twitter;
-import com.twitter.sdk.android.core.models.User;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.tweetui.SearchTimeline;
 import com.twitter.sdk.android.tweetui.TweetTimelineRecyclerViewAdapter;
 
-import java.util.Collections;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
 
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import twitter4j.Trend;
+import twitter4j.Trends;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.conf.ConfigurationBuilder;
+
+import static com.loopj.android.http.AsyncHttpClient.log;
+
 
 public class TrendingHashtagsActivity extends AppCompatActivity {
+
+    public static final String URL_INDIA_TRENDING ="https://api.twitter.com/1.1/trends/place.json?id=23424977";
+
+
+    public static final String CONSUMER_KEY = "BS1hJK04QKLT61t6kWmo1UW4P";
+    public static final String CONSUMER_SECRET = "r9Lp9mIogaVvEBpjBx2grYFEwSm8oKrHKszFaxQMwUtHh7GkAv";
+
+    public static final String TAG = "TwitterUtils";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trending_hashtags);
 
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        ListView trendsList = findViewById(R.id.trendsList);
+        final ArrayList<String> trendsArray = new ArrayList<String>();
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        final Trends[] trends = new Trends[1];
 
-        final SearchTimeline searchTimeline = new SearchTimeline.Builder()
-                .query("#paok")
-                .maxItemsPerRequest(50)
-                .build();
+        ConfigurationBuilder cb = new ConfigurationBuilder();
+        cb.setDebugEnabled(true).setOAuthConsumerKey(CONSUMER_KEY)
+                .setOAuthConsumerSecret(CONSUMER_SECRET)
+                .setOAuthAccessToken("1333402680191045635-DSYeSnH193NWPhV7wa6a5pzq6l0DXf")
+                .setOAuthAccessTokenSecret("ncw5f3BNGfrreolcywPea6snwIMfX1xM3TLGHsYLq1bZt");
 
-        final TweetTimelineRecyclerViewAdapter adapter =
-                new TweetTimelineRecyclerViewAdapter.Builder(this)
-                        .setTimeline(searchTimeline)
-                        .setViewStyle(R.style.tw__TweetLightWithActionsStyle)
-                        .build();
+        TwitterFactory tf = new TwitterFactory(cb.build());
+        final Twitter twitter = tf.getInstance();
 
-        recyclerView.setAdapter(adapter);
+        Thread thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try  {
+                    try {
+                        trends[0] = twitter.getPlaceTrends(23424833);
+                        int k =0;
+                        log.e(TAG, "line 116");
+                        String text = "---";
+                        for (Trend trend : trends[0].getTrends()){
+                            text = trend.getName();
+                            trendsArray.add(text);
+                            log.e(TAG, trendsArray.get(k));
+                            k++;
+                            if (k>19) break;
+                        }
+                        log.e(TAG, "line 130 "+ k + " fores");
+                    } catch (TwitterException e) {
+                        log.e(TAG, "line 125");
+                        e.printStackTrace();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start();
+
+        try {
+            thread.join();
+
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(TrendingHashtagsActivity.this, android.R.layout.simple_list_item_1, trendsArray);
+            log.e(TAG, "line 127");
+            trendsList.setAdapter(arrayAdapter);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        trendsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent j = new Intent(TrendingHashtagsActivity.this, SearchedHashtagsActivity.class);
+                String selected = (String) adapterView.getItemAtPosition(i);
+                j.putExtra("EXTRA_HASHTAG", selected);
+                startActivity(j);
+            }
+        });
+
 
 
     }
+
+
 }

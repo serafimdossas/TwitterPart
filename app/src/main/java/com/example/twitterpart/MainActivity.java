@@ -21,6 +21,8 @@ import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
+import static com.loopj.android.http.AsyncHttpClient.log;
+
 public class MainActivity extends AppCompatActivity {
 
     TwitterLoginButton loginButton;
@@ -37,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
         Twitter.initialize(config);
         setContentView(R.layout.activity_main);
-
         loginButton = (TwitterLoginButton) findViewById(R.id.login_button);
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
