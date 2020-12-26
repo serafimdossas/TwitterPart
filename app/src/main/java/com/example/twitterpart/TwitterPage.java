@@ -1,14 +1,20 @@
 package com.example.twitterpart;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterSession;
@@ -16,6 +22,12 @@ import com.twitter.sdk.android.tweetcomposer.ComposerActivity;
 import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 import com.twitter.sdk.android.tweetui.UserTimeline;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import static java.security.AccessController.getContext;
 
 public class TwitterPage extends Activity {
 
@@ -43,18 +55,30 @@ public class TwitterPage extends Activity {
                 .build();
         tweetList.setAdapter(adapter);
 
+
+
         postButton = findViewById(R.id.postButton);
         postButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
                 final TwitterSession session = TwitterCore.getInstance().getSessionManager()
                         .getActiveSession();
-                final Intent intent = new ComposerActivity.Builder(TwitterPage.this)
+
+                StrictMode.VmPolicy.Builder photoBuilder = new StrictMode.VmPolicy.Builder();
+                StrictMode.setVmPolicy(photoBuilder.build());
+                Uri imageUri = Uri.parse("file:///storage/emulated/0/Download/download.png");
+
+                /*final Intent intent = new ComposerActivity.Builder(TwitterPage.this)
                         .session(session)
+                        .image(imageUri)
                         .text("")
                         .hashtags("#AndroidStudio")
                         .createIntent();
-                startActivity(intent);
+                startActivity(intent);*/
+                TweetComposer.Builder builder = new TweetComposer.Builder(TwitterPage.this)
+                        .text("")
+                        .image(imageUri);
+                builder.show();
             }
         });
 
